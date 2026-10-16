@@ -8,7 +8,7 @@ Aplikasi web responsif untuk mencatat tugas kuliah, memantau deadline, dan mener
 - **Backend:** Node.js 20+, Express, JWT di cookie `HttpOnly`, bcrypt, dan validasi input.
 - **Database:** PostgreSQL.
 - **Push:** Web Push API, Service Worker, dan VAPID.
-- **Penjadwalan:** `node-cron` berjalan setiap menit di proses aplikasi.
+- **Penjadwalan:** `node-cron` memeriksa pengingat tiap 10 menit agar database Neon Free dapat idle; pengiriman dapat terlambat hingga sekitar 10 menit.
 
 ## Struktur proyek
 
@@ -104,7 +104,7 @@ Prioritas tugas: `low`, `medium`, atau `high`. Deadline dikirim sebagai timestam
 2. Deploy folder proyek ke host Node.js (misalnya Render, Railway, Fly.io, atau VPS). Jalankan `npm install` saat build dan `npm start` sebagai start command.
 3. Atur environment variables `NODE_ENV=production`, `PORT` (jika diperlukan host), `DATABASE_URL`, `JWT_SECRET`, `VAPID_PUBLIC_KEY`, `VAPID_PRIVATE_KEY`, dan `VAPID_SUBJECT`. Gunakan secret kuat dan jangan commit `.env`.
 4. Pasang domain dengan HTTPS. Pastikan reverse proxy meneruskan koneksi HTTPS dan cookie secure.
-5. Proses web dan worker pengingat berjalan dalam proses server yang sama. Jalankan satu replica aplikasi untuk menghindari scheduler ganda; constraint unik mengurangi duplikasi, tetapi deployment multi-replica sebaiknya memindahkan worker ke proses tunggal terpisah.
+5. Proses web dan worker pengingat berjalan dalam proses server yang sama. Worker memeriksa setiap 10 menit untuk mengurangi pemakaian compute Neon Free; pengingat H-24 dan H-3 dapat terlambat hingga sekitar 10 menit. Jalankan satu replica aplikasi untuk menghindari scheduler ganda; constraint unik mengurangi duplikasi, tetapi deployment multi-replica sebaiknya memindahkan worker ke proses tunggal terpisah.
 6. Uji register, tambah tugas, penyimpanan subscription, dan pengiriman push dengan deadline uji yang sesuai. Pastikan proses server tetap aktif agar scheduler setiap menit dapat berjalan.
 
 ## Catatan produksi

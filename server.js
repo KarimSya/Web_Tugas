@@ -21,6 +21,7 @@ if (!process.env.JWT_SECRET || process.env.JWT_SECRET.length < 32) {
 }
 
 app.disable('x-powered-by');
+app.set('trust proxy', 'loopback');
 app.use(helmet({
   contentSecurityPolicy: {
     directives: {

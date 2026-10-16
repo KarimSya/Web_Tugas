@@ -84,7 +84,7 @@ async function checkReminders() {
            OR (
              d.id IS NULL
              AND t.deadline <= NOW() + $2::interval
-             AND t.deadline > NOW() + $2::interval - INTERVAL '2 minutes'
+             AND t.deadline > NOW() + $2::interval - INTERVAL '12 minutes'
            )
          )
        ORDER BY t.deadline ASC
@@ -127,7 +127,7 @@ function startReminderWorker() {
       running = false;
     }
   };
-  cron.schedule('* * * * *', run);
+  cron.schedule('*/10 * * * *', run);
   run();
 }
 
