@@ -1,0 +1,17 @@
+{
+  "name": "RuangTugas — Pengingat Tugas Kuliah",
+  "short_name": "RuangTugas",
+  "description": "Atur tugas dan deadline kuliah dalam satu dashboard.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f6f7fb",
+  "theme_color": "#f6f7fb",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
